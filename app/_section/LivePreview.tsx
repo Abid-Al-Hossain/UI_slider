@@ -25,15 +25,38 @@ function shellStyle(state: SliderState): CSSProperties {
 export default function LivePreview({ state }: { state: SliderState }) {
   const invalid = state.invalid || state.previewState === "invalid";
   const message = invalid ? state.errorText : state.showSuccess ? state.successText : state.showHelper ? state.helper : "";
-  const commonInput = "w-full rounded-xl border bg-white/10 px-3 py-2 outline-none";
-  const optionCount = "optionCount" in state && typeof state.optionCount === "number" ? state.optionCount : 4;
-  const options = Array.from({ length: optionCount }, (_, index) => `Option ${index + 1}`);
+  const datalistId = `${state.id}-marks`;
+  const clampedValue = Math.min(state.max, Math.max(state.min, state.value));
+  const step = Math.max(1, state.step);
+  const markValues =
+    state.markMode === "none"
+      ? []
+      : Array.from({ length: Math.floor((state.max - state.min) / step) + 1 }, (_, index) => state.min + index * step).filter((value) => value <= state.max);
+  const rangeStyle: CSSProperties = {
+    accentColor: state.accent,
+    width: state.orientation === "vertical" ? state.height : "100%",
+    writingMode: state.orientation === "vertical" ? "vertical-lr" : "horizontal-tb",
+  };
 
   return (
     <div style={shellStyle(state)} className="grid content-center">
       <label htmlFor={state.id} style={{ fontSize: state.labelSize, fontWeight: state.fontWeight }}>{state.label}{state.required ? " *" : ""}</label>
       <p className="text-sm" style={{ color: state.muted }}>{state.description}</p>
-      <div className="grid gap-2"><input id={state.id} name={state.name} title={state.title} tabIndex={state.tabIndex} dir={state.dir} lang={state.lang} type="range" min={state.min} max={state.max} step={state.step} value={state.value} disabled={state.disabled} aria-invalid={invalid || undefined} aria-valuetext={state.valueText} style={{ accentColor: state.accent }} onChange={() => undefined} />{state.outputMode !== "none" && <output htmlFor={state.id}>{state.valueText}</output>}</div>
+      <div className="grid gap-2" style={{ justifyItems: state.orientation === "vertical" ? "start" : "stretch" }}>
+        <input id={state.id} name={state.name} title={state.title} tabIndex={state.tabIndex} dir={state.dir} lang={state.lang} type="range" min={state.min} max={state.max} step={state.step} value={clampedValue} list={markValues.length ? datalistId : undefined} disabled={state.disabled} aria-invalid={invalid || undefined} aria-orientation={state.orientation} aria-valuetext={state.valueText} style={rangeStyle} onChange={() => undefined} />
+        {markValues.length > 0 && (
+          <datalist id={datalistId}>
+            {markValues.map((value) => (
+              <option key={value} value={value} label={state.markMode === "labels" ? String(value) : undefined} />
+            ))}
+          </datalist>
+        )}
+        {state.outputMode !== "none" && <output htmlFor={state.id} className={state.outputMode === "tooltip" ? "rounded-full px-3 py-1 text-xs" : undefined} style={{ background: state.outputMode === "tooltip" ? state.accent : "transparent", color: state.outputMode === "tooltip" ? "#ffffff" : state.foreground }}>{state.valueText || clampedValue}</output>}
+        <div className="flex justify-between text-xs" style={{ color: state.muted, width: state.orientation === "vertical" ? state.height : "100%" }}>
+          <span>{state.min}</span>
+          <span>{state.max}</span>
+        </div>
+      </div>
       <small style={{ color: invalid ? "#fb7185" : state.showSuccess ? "#22c55e" : state.muted }}>{message}</small>
     </div>
   );

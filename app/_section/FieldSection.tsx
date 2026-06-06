@@ -4,7 +4,6 @@ import { SectionCard } from "@/components/shared/layout/SectionCard";
 import Input from "@/components/shared/input/Input";
 import Slider from "@/components/shared/input/Slider";
 import Select from "@/components/shared/input/Select";
-import Switch from "@/components/shared/input/Switch";
 import type { SliderState } from "../types";
 
 type Props = {
@@ -34,7 +33,6 @@ export default function FieldSection({ state, update }: Props) {
   "inline",
   "tooltip"
 ]} onChange={(value) => update("outputMode", value)} />
-      <Switch label="Range mode preview" checked={state.rangeMode} onChange={(value) => update("rangeMode", value)} />
     </SectionCard>
   );
 }
