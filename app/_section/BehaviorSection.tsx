@@ -1,7 +1,6 @@
 "use client";
 
 import { SectionCard } from "@/components/shared/layout/SectionCard";
-import Switch from "@/components/shared/input/Switch";
 import type { SliderState } from "../types";
 
 type Props = {
@@ -9,10 +8,10 @@ type Props = {
   update: <K extends keyof SliderState>(key: K, value: SliderState[K]) => void;
 };
 
-export default function BehaviorSection({ state, update }: Props) {
+export default function BehaviorSection({ state: _state, update: _update }: Props) {
   return (
-    <SectionCard title="Behavior" subtitle="Behavior controls that are native, preview-honest, and React-export-honest.">
-      <Switch label="Motion safe transition" checked={state.motion} onChange={(value) => update("motion", value)} />
+    <SectionCard title="Behavior" subtitle="Animation behavior.">
+      <p className="text-sm" style={{ color: "var(--muted)" }}>Use the Transitions section to control animation duration and easing.</p>
     </SectionCard>
   );
 }
