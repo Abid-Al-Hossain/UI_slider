@@ -30,9 +30,9 @@ function shellStyle(state: SliderState): CSSProperties {
     padding: state.padding,
     gap: state.gap,
     borderRadius: buildRadius(state),
-    border: `${state.borderWidth}px solid ${invalid ? "#fb7185" : state.previewState === "focus" ? state.accent : state.border}`,
+    border: `${state.borderWidth}px solid ${invalid ? state.errorColor : state.previewState === "focus" ? state.accent : state.border}`,
     boxShadow: buildShadow(state),
-    background: state.background,
+    background: state.disabled && state.disabledUseCustomColors ? state.disabledBg : state.background,
     color: state.foreground,
     fontFamily: resolveFont(state),
     fontStyle: state.fontStyle,
@@ -81,7 +81,7 @@ export default function LivePreview({ state }: { state: SliderState }) {
           <span>{state.max}</span>
         </div>
       </div>
-      <small style={{ color: invalid ? "#fb7185" : state.showSuccess ? "#22c55e" : state.muted }}>{message}</small>
+      <small style={{ color: invalid ? state.errorColor : state.showSuccess ? state.successColor : state.muted }}>{message}</small>
     </div>
   );
 }
