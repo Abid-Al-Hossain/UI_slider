@@ -14,6 +14,7 @@ type Props = {
 export default function FieldSection({ state, update }: Props) {
   return (
     <SectionCard title="Field" subtitle="Field controls that are native, preview-honest, and React-export-honest.">
+      <div className="space-y-4">
       <Slider label="Value" value={state.value} min={0} max={100} step={1} onChange={(value) => update("value", value)} />
       <Slider label="Min" value={state.min} min={0} max={50} step={1} onChange={(value) => update("min", value)} />
       <Slider label="Max" value={state.max} min={60} max={200} step={1} onChange={(value) => update("max", value)} />
@@ -33,6 +34,7 @@ export default function FieldSection({ state, update }: Props) {
   "inline",
   "tooltip"
 ]} onChange={(value) => update("outputMode", value)} />
+    </div>
     </SectionCard>
   );
 }
