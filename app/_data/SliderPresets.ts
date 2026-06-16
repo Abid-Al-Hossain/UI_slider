@@ -82,7 +82,18 @@ export const DEFAULT_SLIDER_STATE: SliderState = {
   "errorColor": "#ef4444",
   "successColor": "#22c55e",
   "readOnly": false,
-  "invalid": false
+  "invalid": false,
+  "ariaLabel": "",
+  "ariaDescribedBy": "",
+  "thumbBg": "#38bdf8",
+  "thumbBorder": "#0ea5e9",
+  "thumbShadow": "0 1px 4px rgba(0,0,0,0.4)",
+  "trackFillBg": "#38bdf8",
+  "trackBg": "rgba(255,255,255,0.15)",
+  "ticksColor": "#94a3b8",
+  "ticksSize": 4,
+  "tooltipBg": "#0f172a",
+  "tooltipText": "#ffffff"
 };
 
 export const SLIDER_PRESETS: StudioPreset[] = [

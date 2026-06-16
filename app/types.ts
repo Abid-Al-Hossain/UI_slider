@@ -88,6 +88,17 @@ export type SliderState = {
   disabledBorder: string;
   readOnly: boolean;
   invalid: boolean;
+  ariaLabel: string;
+  ariaDescribedBy: string;
+  thumbBg: string;
+  thumbBorder: string;
+  thumbShadow: string;
+  trackFillBg: string;
+  trackBg: string;
+  ticksColor: string;
+  ticksSize: number;
+  tooltipBg: string;
+  tooltipText: string;
 };
 
 export type StudioPreset = {
